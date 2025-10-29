@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>感情認識デモ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="w-full h-screen">
+    <header>
+        <h1 class="bg-gray-100 text-black font-bold text-2xl">カメラで感情認識</h1>
+    </header>
+    <main class="flex justify-center items-center gap-20 w-full h-[90%] p-4">
+        <div class="flex flex-col justify-center items-center flex-[1] min-w-0 h-full p-6 bg-gray-200 rounded-lg shadow-sm">
+            <!-- ブラウザ上で動画を再生・表示するためのタグ -->
+            <!-- autoplay: ページ開いたら自動再生 -->
+            <!-- playsinline: スマホで全画面にせず埋め込み表示 -->
+            <video id="camera" autoplay playsinline class="object-contain w-[360px] h-[180px] bg-[#444444] rounded-lg shadow"></video>
+            <!-- 絵描きボードのようなタグ -->
+            <!-- JSでどんなものを描くか指示する -->
+            <canvas id="canvas" style="display:none;"></canvas>
+            <!-- 結果表示 -->
+            <p id="result" class="w-1/2 break-words text-xl text-black">感情：-</p>
+        </div>
+        <div class="flex flex-col justify-center items-center flex-[2] h-full p-6 bg-gray-200 rounded-lg shadow-sm">
+            <canvas id="game-canvas" class="w-full h-full"></canvas>
+        </div>
+    </main>
+    
+
+    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
