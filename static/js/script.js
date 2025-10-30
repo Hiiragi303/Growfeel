@@ -1,4 +1,4 @@
-import { drawSky } from "./weather.js";
+import { drawSky, drawLightning, drawThickFog, drawTyphoon, drawSunny, drawRainbow, drawRainy } from "./weather.js";
 
 // 要素取得
 const video = document.getElementById('camera');
@@ -9,18 +9,21 @@ const gameCanvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext('2d');
 const gameCtx = gameCanvas.getContext('2d');
 
+gameCanvas.width = gameCanvas.clientWidth;
+gameCanvas.height = gameCanvas.clientHeight;
+
 // 感情を格納
-currentEmotion = "neutral";
+let currentEmotion = "neutral";
 
 // 感情と天候のマップ
 const weatherMap = {
-    angry: drawLightning,
-    disgust: drawThickFog,
-    fear: drawTyphoon,
-    happy: drawSunny,
-    sad: drawRainy,
-    surprise: drawRainbow,
-    neutral: drawSky,
+    "angry": drawLightning,
+    "disgust": drawThickFog,
+    "fear": drawTyphoon,
+    "happy": drawSunny,
+    "sad": drawRainy,
+    "surprise": drawRainbow,
+    "neutral": drawSky,
 }
 
 /**
@@ -79,17 +82,33 @@ async function sendFrame() {
     });
 
     const data = await res.json();
+    currentEmotion = data.emotion;
     result.textContent = `感情：${data.emotion}`;
 }
 
+function setText(text, _color="#000", _align="center") {
+    gameCtx.font = "24px sans-serif";   // フォント指定
+    gameCtx.fillStyle = _color;         // 文字色
+    gameCtx.textAlign = _align;       // 揃え位置
+    gameCtx.fillText(text, gameCanvas.width / 2, 50);  // (x, y) 位置に描く
+}
+
 function render() {
-    drawSky(gameCtx, gameCanvas.width, gameCanvas.height);
-    requestAnimationFrame(render)
+    if (!gameCtx) return;
+    // console.log(weatherMap[currentEmotion]);
+    // console.log(currentEmotion);
+    const drawFn = weatherMap[currentEmotion] || drawSky;
+    gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+    drawFn(gameCtx, gameCanvas.width, gameCanvas.height);
+    setText(currentEmotion);
+
+    requestAnimationFrame(render);
 }
 
 initCamera();
 /**
  * @see {@link https://developer.mozilla.org/ja/docs/Web/API/Window/setInterval}
  */
-setInterval(sendFrame, 5000);
+setInterval(sendFrame, 1000);
 render()
