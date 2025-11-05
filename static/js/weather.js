@@ -6,7 +6,15 @@ const color = {
     white: "#ffffff",
     red: "#ff0000",
     blue: "#0004ff",
-    yellow: "#ffe100ff",
+    yellow: "#ffe100",
+}
+
+export function drawBackground(ctx, width, height, type="neutral") {
+    switch (type) {
+        case "neutral":
+            drawSky(ctx, width, height);
+            break;
+    }
 }
 
 export function drawSky(ctx, width, height) {
