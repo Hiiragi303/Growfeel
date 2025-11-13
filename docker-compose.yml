@@ -1,7 +1,17 @@
 services:
-  app:
-    build: .
+  backend:
+    build: ./backend
     ports:
       - "5050:5050"
     volumes:
-      - .:/app
+      - ./backend:/app
+    environment:
+      - FLASK_ENV=development
+  
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+    command: ["npm", "run", "dev", "--", "--host"]
