@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
-from backend.image_decoder import decode_base64_image
-from backend.detector import detect_emotion
+from backend.utils.image_decoder import decode_base64_image
+from backend.utils.detector import detect_emotion
 import logging
 
 # Loggerの設定
