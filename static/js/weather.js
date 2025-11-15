@@ -79,3 +79,10 @@ export function drawRainbow(ctx, width, height) {
     ctx.fillStyle = gradient;  // グラデーションの指定
     ctx.fillRect(0, 0, width, height);
 }
+
+/**
+ * @see {@link https://qiita.com/duka/items/70ebb3d209d080dc5cfb}
+ */
+function drawRain() {
+    
+}
