@@ -1,11 +1,11 @@
 # ==== ベース ====
-FROM node:20-alpine
+FROM node:20
 
 # ==== 作業ディレクトリ ====
 WORKDIR /app
 
 # ==== パッケージインストール ====
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm install
 
 # ==== アプリ本体 ====
