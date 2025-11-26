@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
-from backend.utils.image_decoder import decode_base64_image
-from backend.utils.detector import detect_emotion
+from flask_cors import CORS
+from utils.image_decoder import decode_base64_image
+from utils.detector import detect_emotion
 import logging
 
 # Loggerの設定
@@ -12,11 +13,7 @@ logger = logging.getLogger(__name__)
 
 # Flaskアプリの初期化
 app = Flask(__name__)
-
-# HTMLを返すルート
-@app.route("/")
-def index():
-    return render_template("index.html")
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # 感情認識を行うエンドポイント
 @app.route("/api/predict", methods=["POST"])
